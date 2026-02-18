@@ -1,0 +1,1 @@
+A sobrescrita serve pra mudar o comportamento de um método que vem da classe mãe. Então cada classe filha pode fazer do seu jeito. No caso, o carro “dirige” e a bicicleta “pedala”, mesmo usando o mesmo método. Isso é o polimorfismo rolando na prática.

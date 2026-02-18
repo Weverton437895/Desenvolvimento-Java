@@ -1,0 +1,1 @@
+A sobrecarga acontece quando a gente tem vários métodos com o mesmo nome, mas com parâmetros diferentes. É tipo várias versões do mesmo comando. Isso ajuda a deixar o código mais limpo e organizado. Diferente da sobrescrita, ela acontece dentro da mesma classe e o Java decide qual usar já na hora de compilar

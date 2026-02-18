@@ -1,0 +1,1 @@
+Com a sobrescrita, dá pra criar vários tipos de pagamento sem precisar mudar o código principal. Cada classe faz o método do seu jeito exemplo boleto, cartão, etc. e o Java escolhe automaticamente qual usar dependendo do objeto. É o polimorfismo ajudando a vida do programador.

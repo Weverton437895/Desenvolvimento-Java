@@ -1,0 +1,1 @@
+A sobrecarga de construtores é útil pra criar objetos de jeitos diferentes. Tipo, às vezes eu quero só o nome do produto, outras vezes quero nome, preço e quantidade. Isso deixa o código bem mais flexível e fácil de usar.

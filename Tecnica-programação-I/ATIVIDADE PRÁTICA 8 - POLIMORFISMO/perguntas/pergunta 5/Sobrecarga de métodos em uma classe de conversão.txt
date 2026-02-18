@@ -1,0 +1,1 @@
+A sobrecarga deixa a gente usar o mesmo método converter() pra fazer coisas diferentes, tipo converter temperatura, distância ou até texto. É legal porque deixa o código mais simples, sem precisar inventar vários nomes de métodos pra cada caso.
