@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima - Previsão do Tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 80px auto;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        h1 { color: #333; }
+        p { color: #555; margin-top: 8px; }
+        .cidades {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+        .cidade-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #333;
+        }
+        .cidade-btn:hover { border-color: #e8a000; color: #e8a000; }
+        .separador { margin: 20px 0 4px; color: #999; font-size: 13px; }
+        form {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        input[type="number"] {
+            padding: 10px 16px;
+            font-size: 16px;
+            width: 160px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e8a000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #c78a00; }
+    </style>
+</head>
+<body>
+<h1>Previsão do Tempo</h1>
+<p>Selecione uma cidade ou insira as coordenadas.</p>
+
+<div class="cidades">
+    <button type="button" class="cidade-btn" onclick="setCoords(-23.55, -46.63)">São Paulo</button>
+    <button type="button" class="cidade-btn" onclick="setCoords(-22.91, -43.17)">Rio de Janeiro</button>
+    <button type="button" class="cidade-btn" onclick="setCoords(-15.78, -47.93)">Brasília</button>
+    <button type="button" class="cidade-btn" onclick="setCoords(-3.73, -38.52)">Fortaleza</button>
+</div>
+
+<p class="separador">ou insira manualmente</p>
+
+<form action="/clima" method="get">
+    <input type="number" name="latitude"  id="latitude"  step="0.0001" placeholder="Latitude"  required />
+    <input type="number" name="longitude" id="longitude" step="0.0001" placeholder="Longitude" required />
+    <button type="submit">Buscar</button>
+</form>
+
+<script>
+    function setCoords(lat, lon) {
+        document.getElementById('latitude').value  = lat;
+        document.getElementById('longitude').value = lon;
+    }
+</script>
+</body>
+</html>

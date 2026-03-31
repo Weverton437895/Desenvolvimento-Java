@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado - Clima</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #f5f5f5;
+        }
+        .voltar {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e8a000;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .voltar:hover { text-decoration: underline; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h1 { margin-top: 0; color: #333; font-size: 22px; }
+        .card p { margin: 8px 0; color: #555; line-height: 1.5; }
+        .card strong { color: #333; }
+        .temperatura {
+            font-size: 48px;
+            font-weight: bold;
+            color: #e8a000;
+            margin: 16px 0 4px;
+        }
+        .condicao {
+            display: inline-block;
+            background: #e8a000;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .info-linha {
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+        .erro {
+            background: #fff3f3;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 8px;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/" class="voltar">&larr; Nova consulta</a>
+
+<div class="erro" th:if="${erro != null}">
+    <strong>Não foi possível obter os dados.</strong>
+    <p th:text="${erro}"></p>
+</div>
+
+<div class="card" th:if="${clima != null}">
+    <h1>Previsão do Tempo</h1>
+    <p>
+        <strong>Coordenadas:</strong>
+        <span th:text="|${clima.latitude}°, ${clima.longitude}°|"></span>
+    </p>
+    <div class="temperatura">
+        <span th:text="${clima.climaAtual.temperature2m}">--</span>°C
+    </div>
+    <span class="condicao" th:text="${condicao}">--</span>
+    <div class="info-linha">
+        <p>
+            <strong>Velocidade do vento:</strong>
+            <span th:text="${clima.climaAtual.windspeed10m}">--</span> km/h
+        </p>
+        <p>
+            <strong>Código climático (WMO):</strong>
+            <span th:text="${clima.climaAtual.weathercode}">--</span>
+        </p>
+        <p>
+            <strong>Atualizado em:</strong>
+            <span th:text="${clima.climaAtual.time}">--</span>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

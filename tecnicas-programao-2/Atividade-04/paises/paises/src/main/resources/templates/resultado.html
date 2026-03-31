@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- Título dinâmico com o nome do país -->
+    <title th:text="${pais.nomeComum} + ' — Países'">País — Países</title>
+    <style>
+        /* ── Reset & base ─────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+        }
+
+        /* ── Card principal ───────────────────────────────────────── */
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 560px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+        }
+
+        /* ── Bandeira ─────────────────────────────────────────────── */
+        .flag-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .flag-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Overlay escuro na parte inferior para suavizar a transição */
+        .flag-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 80px;
+            background: linear-gradient(transparent, rgba(13,20,40,0.85));
+        }
+
+        /* ── Conteúdo textual ─────────────────────────────────────── */
+        .content {
+            padding: 28px 32px 36px;
+        }
+
+        .nome-comum {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #e96c4c, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .nome-oficial {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.45);
+            margin-top: 4px;
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        /* ── Grade de dados ───────────────────────────────────────── */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+
+        /* Capital ocupa a linha toda */
+        .item.full { grid-column: 1 / -1; }
+
+        .label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+
+        /* ── Botão voltar ─────────────────────────────────────────── */
+        .btn-voltar {
+            margin-top: 28px;
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e96c4c, #f5a623);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .btn-voltar:hover  { opacity: 0.88; }
+        .btn-voltar:active { transform: scale(0.97); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <!-- ── Bandeira ── -->
+    <div class="flag-wrapper">
+        <img th:src="${pais.urlBandeira}"
+             th:alt="'Bandeira de ' + ${pais.nomeComum}"
+             onerror="this.style.display='none'"/>
+    </div>
+
+    <!-- ── Dados do país ── -->
+    <div class="content">
+
+        <div class="nome-comum"  th:text="${pais.nomeComum}">Nome do País</div>
+        <div class="nome-oficial" th:text="${pais.nomeOficial}">Nome Oficial</div>
+
+        <div class="grid">
+
+            <!-- Capital (largura total) -->
+            <div class="item full">
+                <div class="label">🏛 Capital</div>
+                <div class="value" th:text="${pais.capital}">—</div>
+            </div>
+
+            <!-- Região -->
+            <div class="item">
+                <div class="label">🌎 Região</div>
+                <div class="value" th:text="${pais.regiao}">—</div>
+            </div>
+
+            <!-- Sub-região -->
+            <div class="item">
+                <div class="label">📍 Sub-região</div>
+                <div class="value" th:text="${pais.subRegiao}">—</div>
+            </div>
+
+            <!-- População formatada com separador de milhar -->
+            <div class="item">
+                <div class="label">👥 População</div>
+                <!--
+                    #numbers.formatInteger(valor, 0, 'POINT') formata com
+                    separador de milhar usando ponto (padrão BR).
+                -->
+                <div class="value"
+                     th:text="${#numbers.formatInteger(pais.populacao, 0, 'POINT')}">
+                    —
+                </div>
+            </div>
+
+            <!-- Área formatada -->
+            <div class="item">
+                <div class="label">📐 Área (km²)</div>
+                <div class="value"
+                     th:text="${#numbers.formatDecimal(pais.area, 0, 'POINT', 0, 'COMMA')} + ' km²'">
+                    —
+                </div>
+            </div>
+
+        </div><!-- /grid -->
+    </div><!-- /content -->
+</div><!-- /card -->
+
+<!-- Botão que leva de volta ao formulário -->
+<a href="/" class="btn-voltar">← Nova busca</a>
+
+</body>
+</html>
